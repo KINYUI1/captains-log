@@ -11,6 +11,9 @@ const Index = ({logs})=>{
              <form method="POST" action={`/logs/${log._id}?_method=DELETE`}>
                 <input type="submit" value='DELETE'/>
               </form>
+              <form method='GET' action={`/logs/edit/${log._id}`}>
+                <input type='submit' value='EDIT'/>
+              </form>
             </div>
             })}
             </ul>

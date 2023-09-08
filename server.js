@@ -50,9 +50,33 @@ app.post('/logs',async (req,res)=>{
     console.log(req.body);
 
 })
+app.get('/logs/edit/:id',async (req,res)=>{
+    const {id} = req.params
+    const log = await Logs.findById(id)
+    res.render('Edit',{log})
+})
 
-app.delete('/logs/:id',(req,res)=>{
-    res.send('delete working')
+app.put('/logs/:id',async (req,res)=>{
+    const {id} = req.params
+    if(req.body.shipIsBroken == 'on'){
+        req.body.shipIsBroken = true
+    }else{
+        req.body.shipIsBroken = false
+    }
+    console.log(id);
+    console.log(req.body);
+    try {
+        await Logs.findByIdAndUpdate(id,req.body,{new:true})
+        res.redirect(`/show/${id}`)
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+app.delete('/logs/:id',async (req,res)=>{
+    const {id} = req.params;
+    await Logs.findByIdAndDelete(id)
+    res.redirect('/logs')
 })
 
 
